@@ -1,0 +1,1 @@
+export * from './addGoals.component';
