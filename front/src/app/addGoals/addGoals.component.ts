@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 import { NavbarComponent } from  '../navbar';
 import { WebService } from '../webservices';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, Validators, AbstractControl, FormBuilder,  
+  FormGroup } from '@angular/forms';
 
 import { MdDialog, MdDialogRef, MdSlider } from '@angular/material';
 
@@ -18,6 +19,9 @@ import 'hammerjs';
   providers: [WebService, AuthenticationService]
 })
 export class AddGoalsComponent implements OnInit {
+
+
+
 
   selectedGoal: string;
   selectedImportance: string;
@@ -42,11 +46,55 @@ export class AddGoalsComponent implements OnInit {
     {value: '10', viewValue: '10'},
   ];
 
+  goalForm: FormGroup;
+  goalType: AbstractControl;
+  targetAmount: AbstractControl;
+  numYears: AbstractControl;
+  numMonths: AbstractControl;
 
-
-  heroes = [];
   constructor(private http: Http, private router: Router,
-    private webservice: WebService, public dialog: MdDialog) {
+    private webservice: WebService, public dialog: MdDialog, fb: FormBuilder) {
+
+      this.goalForm = fb.group({  
+      'goalType':  [],
+      'targetAmount':  ['', Validators.required],
+      'numYears':  ['', Validators.required],
+      'numMonths':  ['', Validators.required],
+    }); 
+
+    this.goalType = this.goalForm.controls['goalType']; 
+    this.targetAmount = this.goalForm.controls['targetAmount']; 
+    this.numYears = this.goalForm.controls['numYears']; 
+    this.numMonths = this.goalForm.controls['numMonths']; 
+
+    // To change based on user settings
+    this.goalType.valueChanges.subscribe(data => {
+       if(this.goalType.value === "Retirement"){
+         this.targetAmount.setValue(1000000);
+         this.numYears.setValue(30);
+         this.numMonths.setValue(0);
+       }
+       else if(this.goalType.value === "Buying a home"){
+         this.targetAmount.setValue(200000);
+         this.numYears.setValue(5);
+         this.numMonths.setValue(6);
+       }
+       else if(this.goalType.value === "Buying a car"){
+         this.targetAmount.setValue(10000);
+         this.numYears.setValue(1);
+         this.numMonths.setValue(3);
+       }
+    });
+
+  }
+
+  onSubmit(form: any): void {  
+
+    // On submit of the questionnaire, sumbmit to server.
+
+    console.log('you submitted value:', form); 
+    window.scrollTo(0, 0);
+
   }
 
   ngOnInit() {
@@ -58,7 +106,7 @@ export class AddGoalsComponent implements OnInit {
   }
 
   public clear() {
-    this.heroes = [];
+
   }
 
   /**
@@ -75,7 +123,6 @@ export class AddGoalsComponent implements OnInit {
   private handleData(data: Response) {
     if (data.status === 200) {
       let receivedData = data.json();
-      this.heroes = receivedData['Heroes'];
     }
     console.log(data.json());
   }

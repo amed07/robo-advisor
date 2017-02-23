@@ -83,38 +83,41 @@
     <div class="side-body">
       <h1> Add a goal</h1>
 
-      <form>
+      <form [formGroup]="goalForm" (ngSubmit)="onSubmit(goalForm.value)">
         <h3>Select a goal:</h3>
-        <select placeholder="Select Goal" [(ngModel)]="selectedGoal" name="goal">
+        <select placeholder="Select Goal" name="goal" [formControl]="goalForm.controls['goalType']">
           <option *ngFor="let goal of goals" [value]="goal.value">
             {{goal.viewValue}}
           </option>
         </select>
+
         <br>
         <h3>What is the target amount that you wish to finish with?</h3>
 
-        <md-input-container>
-          <input md-input placeholder="Amount" value="10000">
-        </md-input-container>
+        <input type="text"  
+                   id="targetAmount"  
+                   placeholder="TARGET"  
+                   required type="number"
+                   [formControl]="goalForm.controls['targetAmount']">  
 
         <br>
         <h3>What is the timeframe?</h3>
 
-        <md-input-container>
-          <input md-input placeholder="Years" value="35">
-        </md-input-container>
+        <input type="text"  
+                   id="numYears"  
+                   placeholder="YEARS"  
+                   required type="number"
+                   [formControl]="goalForm.controls['numYears']">  
 
-        <md-input-container>
-          <input md-input placeholder="Months" value="0">
-        </md-input-container>
-        <br>
-        <h3>How important is it to meet this goal?</h3>
-         <select placeholder="Select Goal" [(ngModel)]="selectedImportance" name="scale">
-          <option *ngFor="let scale of scales" [value]="scale.value">
-            {{scale.viewValue}}
-          </option>
-        </select>
+
+        <input type="text"  
+                   id="numMonths"  
+                   placeholder="MONTHS"  
+                   required type="number"
+                   [formControl]="goalForm.controls['numMonths']">  
+
         <br><br>
+
         <button type="submit">Submit</button>
       </form>
 
