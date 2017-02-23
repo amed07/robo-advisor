@@ -6,16 +6,12 @@ import { NavbarComponent } from  '../navbar';
 import { WebService } from '../webservices';
 import { MaterialModule } from '@angular/material'
 
-import { FormsModule, Validators, AbstractControl } from '@angular/forms';
+import { FormsModule, Validators, AbstractControl, FormBuilder,  
+  FormGroup } from '@angular/forms';
 
 import { MdDialog, MdDialogRef, MdSlider } from '@angular/material';
 
 import 'hammerjs';
-
-import {  
-  FormBuilder,  
-  FormGroup  
-} from '@angular/forms';
 
 @Component({
   selector: 'questionnaire',
@@ -23,7 +19,7 @@ import {
   styleUrls: ['./questionnaire.component.css'],
   providers: [WebService, AuthenticationService]
 })
-export class QuestionnaireComponent{
+export class QuestionnaireComponent implements OnInit{
 
   pageNumber = "1";
 
@@ -45,7 +41,8 @@ export class QuestionnaireComponent{
   monthlyContribution: AbstractControl;
   riskTolerance: AbstractControl;
  
-  constructor(fb: FormBuilder, private router: Router) {  
+  constructor(private http: Http, private router: Router,
+    private webservice: WebService, public dialog: MdDialog, fb: FormBuilder) {  
     this.myForm = fb.group({  
       'age':  ['30', Validators.required],
       'retireAge':  ['65', Validators.required],
@@ -92,5 +89,47 @@ export class QuestionnaireComponent{
     window.scrollTo(0, 0);
     this.router.navigate(['/home'])
 
+  }
+
+
+  ngOnInit() {
+    this.webservice.isAuthenticated();
+  }
+
+  ngOnDestroy() {
+    // Will clear when component is destroyed e.g. route is navigated away from.
+  }
+
+  public clear() {
+    
+  }
+
+  /**
+   * Fetch the data from the python-flask backend
+   */
+  public getData() {
+    this.webservice.getDataFromBackend()
+      .subscribe(
+      data => this.handleData(data),
+      err => this.logError(err),
+      () => console.log('got data')
+      );
+  }
+  private handleData(data: Response) {
+    if (data.status === 200) {
+      let receivedData = data.json();
+    }
+    console.log(data.json());
+  }
+
+
+  private logError(err: Response) {
+    console.log('There was an error: ' + err.status);
+    if (err.status === 0) {
+      console.error('Seems server is down');
+    }
+    if (err.status === 401) {
+      this.router.navigate(['/sessionexpired']);
+    }
   }
 }
