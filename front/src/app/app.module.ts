@@ -21,6 +21,7 @@ import { HomeComponent } from './home';
 import { DataResolver } from './app.resolver';
 import { NavbarComponent } from  './navbar';
 import { AddGoalsComponent } from './addGoals';
+import { QuestionnaireComponent } from './questionnaire'
 
 import { MaterialModule } from '@angular/material';
 
@@ -47,6 +48,7 @@ const APP_PROVIDERS = [
     SessionExpiredComponent,
     PageNotFoundComponent,
     AddGoalsComponent,
+    QuestionnaireComponent
 
   ],
   imports: [ // import Angular's modules

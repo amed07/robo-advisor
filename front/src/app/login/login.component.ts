@@ -45,7 +45,7 @@ export class LoginFormComponent {
 
     this._service.login(body)
       .subscribe(data => {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/questionnaire']);
       },
       error => this.handleError(error)
       );

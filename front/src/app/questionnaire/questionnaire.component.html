@@ -1,0 +1,147 @@
+<navbar></navbar>
+<div class="row top-buffer">
+
+  <!-- Main Content -->
+  <div class="container-fluid">
+    <div>  
+      <h2>Questionnaire</h2>  
+      <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)">
+
+        <div [ngSwitch]="pageNumber">
+
+          <div *ngSwitchCase="1">
+            <h3>What is your age?</h3>
+       
+            <input type="text"  
+                   id="ageInput"  
+                   placeholder="AGE"  
+                   required type="number"
+                   [formControl]="myForm.controls['age']">  
+            <br><br>
+
+            <h3>What age do you see yourself retiring at?</h3>
+
+            <input type="text"  
+                   id="retireAgeInput"  
+                   placeholder="RETIREMENT AGE"  
+                   required type="number"
+                   [formControl]="myForm.controls['retireAge']">
+       
+            <br><br>
+
+            <h3>What is your current annual income?</h3>
+
+            <input type="text"  
+                   id="income"  
+                   placeholder="INCOME"  
+                   required type="number"
+                   [formControl]="myForm.controls['income']">
+
+            <br><br>
+       
+            <button (click)="pageNumber=2">Next</button>
+          </div>
+
+
+          <div *ngSwitchCase="2">
+            <h3>How many years of retirement are you saving for?</h3>
+
+            <input type="text"  
+                   id="yearsRetired"  
+                   placeholder="NUMBER OF YEARS RETIRED"  
+                   required type="number"
+                   [formControl]="myForm.controls['yearsRetired']">
+
+            <br><br>
+
+            <h3>How much yearly net income would you like to recieve at retirement?</h3>
+
+            <input type="text"  
+                   id="incomeRetired"  
+                   placeholder="RETIRED INCOME"  
+                   required type="number"
+                   [formControl]="myForm.controls['incomeRetired']">
+
+            <br><br>
+
+            <button (click)="pageNumber=1">Previous</button>
+            <button (click)="pageNumber=3">Next</button>
+          </div>
+
+
+
+          <div *ngSwitchCase="3">
+
+            <h3>How much have you saved in your RSP?</h3>
+
+            <input type="text"  
+                   id="rspSavings"  
+                   placeholder="RSP SAVINGS" 
+                   required type="number"
+                   [formControl]="myForm.controls['rspSavings']">
+
+            <br><br>
+
+            <h3>How much are you willing to contribute on a monthly basis to this account?</h3>
+
+            <input type="text"  
+                   id="rspMonthlyContribution"  
+                   placeholder="CONTRIBUTION"  
+                   required type="number"
+                   [formControl]="myForm.controls['rspMonthlyContribution']">
+
+            <br><br>
+
+            <h3>How much have you saved up, outside of your RSP?</h3>
+
+            <input type="text"  
+                   id="savings"  
+                   placeholder="SAVINGS" 
+                   required type="number"
+                   [formControl]="myForm.controls['savings']">
+
+            <br><br>
+
+            <h3>How much are you willing to contribute on a monthly basis to this account?</h3>
+
+            <input type="text"  
+                   id="monthlyContribution"  
+                   placeholder="CONTRIBUTION"  
+                   required type="number"
+                   [formControl]="myForm.controls['monthlyContribution']">
+
+            <br><br>
+
+            <button (click)="pageNumber=2">Previous</button>
+            <button (click)="pageNumber=4">Next</button>
+          </div>
+
+        
+          <div *ngSwitchCase="4">
+            <h3>What is your risk tolerance?</h3>
+
+
+              <input type="radio" name="riskTolerance" value="1" [formControl]="myForm.controls['riskTolerance']" 
+                     id="riskTolerance">
+                     <label>Conservative</label>
+
+                     <br><br>
+
+              <input type="radio" name="riskTolerance" value="2" [formControl]="myForm.controls['riskTolerance']" 
+                     id="riskTolerance">
+                     <label>Moderate</label>
+                     <br><br>
+
+              <input type="radio" name="riskTolerance" value="3" [formControl]="myForm.controls['riskTolerance']" 
+                     id="riskTolerance">
+                     <label>Aggresive</label>
+            <br><br>
+            
+
+            <button type="submit" class="ui button">Submit</button>  
+          </div>
+        </div>
+      </form>  
+    </div>  
+  </div>
+</div>
