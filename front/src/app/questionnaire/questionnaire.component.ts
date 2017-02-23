@@ -45,7 +45,7 @@ export class QuestionnaireComponent{
   monthlyContribution: AbstractControl;
   riskTolerance: AbstractControl;
  
-  constructor(fb: FormBuilder) {  
+  constructor(fb: FormBuilder, private router: Router) {  
     this.myForm = fb.group({  
       'age':  ['30', Validators.required],
       'retireAge':  ['65', Validators.required],
@@ -57,6 +57,7 @@ export class QuestionnaireComponent{
       'savings':  ['', Validators.required],
       'monthlyContribution':  ['', Validators.required],
       'riskTolerance':  [],
+
     }); 
 
     this.age = this.myForm.controls['age'];   
@@ -87,6 +88,9 @@ export class QuestionnaireComponent{
 
     // On submit of the questionnaire, sumbmit to server.
 
-    console.log('you submitted value:', form);  
+    console.log('you submitted value:', form); 
+    window.scrollTo(0, 0);
+    this.router.navigate(['/home'])
+
   }
 }
