@@ -1,32 +1,63 @@
-# FlaskMaterial
+# angular2-flask
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.26.
+Simple angular2 app with python-flask backend (for learning angular2)
 
-## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Info
 
-## Code scaffolding
+1.  `backend` directory contains the flask backend with simple authentication methods
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+2.  `front` directory contains the angular2 frontend based on [angular-webpack-starter](https://github.com/AngularClass/angular2-webpack-starter)
 
-## Build
+## Usage
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+1.  Clone the repo
 
-## Running unit tests
+    ```bash
+    git clone --depth 1 https://github.com/ansrivas/angular2-flask.git
+    cd angular2-flask
+    ```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+2.  Install the backend related requirements and run. The following will start a flask-server on `localhost:8080`
 
-## Running end-to-end tests
+    ```bash
+    cd backend
+    sudo pip install -r requirements.txt
+    python run.py
+    ```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+3.  Install frontend related dependencies
 
-## Deploying to GitHub Pages
+    -   Easiest way to handle node related dependencies is to install [nvm](https://github.com/creationix/nvm)
+    -   Once you have node installed, install the project's dependencies
 
-Run `ng github-pages:deploy` to deploy to GitHub Pages.
+    ```bash
+    cd front
 
-## Further help
+    # install global dependencies
+    npm install webpack-dev-server rimraf webpack typescript -g
 
-To get more help on the `angular-cli` use `ng help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-# robo-advisor
+    # install project related dependencies
+    npm install
+
+    # run server
+    npm run server:dev:hmr
+    ```
+
+4.  Now navigate to `http://localhost:3000` and login using default credential : `admin:admin`
+
+### Docker support:
+
+The current build is using `nginx` to serve static files. The pre-requisite is to run the following commands and then use `docker-compose`
+
+1. Build the frontend ( production build )
+
+  ```bash
+  cd front
+  npm install webpack-dev-server rimraf webpack typescript -g
+  npm install
+  npm run build:prod
+  ```
+  
+4. Now, in project root directory execute `docker-compose up`
+
+3. Navigate to `http://localhost:3000` and login using `admin:admin`  
